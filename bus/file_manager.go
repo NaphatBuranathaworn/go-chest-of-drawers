@@ -23,7 +23,7 @@ func CopyFile(path string, pattern string) {
 		txtArr = strings.Fields(f.Name())
 
 		if txtArr.contains(pattern) {
-			abPath := filepath.Join(path, txtArr[2])
+			abPath := filepath.Join(path, "Screen Shots", txtArr[2])
 
 			if err = os.MkdirAll(abPath, 0755); err != nil {
 				log.Fatal(err)
