@@ -1,10 +1,11 @@
 package main
 
 import (
-	"chest-of-drawers/bus"
-	"os"
 	"bufio"
+	"chest-of-drawers/bus"
 	"fmt"
+	"log"
+	"os"
 )
 
 func main() {
@@ -19,7 +20,12 @@ func main() {
         }
     }
 
-    path := "/Users/naphatburanathaworn/Desktop"
+    path, err := os.Getwd()
+    if err != nil {
+        log.Println(err)
+    }
+
+    // path := "/Users/naphatburanathaworn/Desktop"
     key := "Screen"
     bus.CopyFile(path, key)
 }
