@@ -9,17 +9,22 @@ import (
 
 func main() {
     scanner := bufio.NewScanner(os.Stdin)
-
+    var path string
     for {
-        fmt.Print("Press Enter to execute... ")
+        fmt.Print("Path screen shots => ");
+        fmt.Scanln(&path)
+        fmt.Println("Confirm path : ", path)
+        fmt.Print("Please Enter to continue ...")
+
         scanner.Scan()
         text := scanner.Text()
-        if text == ":wq" || len(text) == 0 {
+        
+        if text == ":wq" || len(path) > 0 {
             break
         }
     }
 
-    path := "/Users/naphatburanathaworn/Desktop"
+    // path := "/Users/naphatburanathaworn/Desktop"
     key := "Screen"
     bus.CopyFile(path, key)
 }
