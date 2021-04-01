@@ -1,0 +1,21 @@
+	// fmt.Println("test : ", txtArr)
+
+		// if txtArr.contains(pattern) {
+		// 	abPath := filepath.Join(path, "Screen Shots", txtArr[2])
+
+		// 	if err = os.MkdirAll(abPath, 0755); err != nil {
+		// 		log.Fatal(err)
+		// 	}
+
+		// 	fmt.Printf("create dir : %s success. \n", abPath)
+
+		// 	oldFile := filepath.Join(path, f.Name())
+		// 	newFile := filepath.Join(abPath, f.Name())
+
+		// 	fmt.Printf("move file [%s] to [%s] success.\n", oldFile, newFile)
+
+		// 	err := os.Rename(oldFile, newFile)
+		// 	if err != nil {
+		// 		log.Fatal(err)
+		// 	}
+		// }

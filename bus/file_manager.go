@@ -4,10 +4,24 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"os"
+
+	// "os"
 	"path/filepath"
 	"strings"
+
+	"github.com/NaphatBuranathaworn/chest-of-drawers/utils"
 )
+
+// type ArrayString []string
+
+var listSplitter = utils.ArrayString{"_", " ", "-", "|"}
+var listExtension = utils.ArrayString{".png", ".jpg", ".jpeg", ".gif"}
+
+type File struct {
+	name        string
+	currentPath string
+	targetPath  string
+}
 
 // CopyFile ...;
 func CopyFile(path string, pattern string) {
@@ -17,43 +31,57 @@ func CopyFile(path string, pattern string) {
 		log.Fatal(err)
 	}
 
+	var fileSplt []string
+
 	for _, f := range files {
+		var file File
+		file.name = f.Name()
 
-		var txtArr ArrayString
-		txtArr = strings.Fields(f.Name())
+		extenstion := filepath.Ext(file.name)
 
-		if txtArr.contains(pattern) {
-			abPath := filepath.Join(path, "Screen Shots", txtArr[2])
+		if listExtension.Contains(extenstion) {
 
-			if err = os.MkdirAll(abPath, 0755); err != nil {
-				log.Fatal(err)
-			}
-
-			fmt.Printf("create dir : %s success. \n", abPath)
-
-			oldFile := filepath.Join(path, f.Name())
-			newFile := filepath.Join(abPath, f.Name())
-
-			fmt.Printf("move file [%s] to [%s] success.\n", oldFile, newFile)
-
-			err := os.Rename(oldFile, newFile)
+			sign, err := file.GetFileSplitter();
 			if err != nil {
 				log.Fatal(err)
 			}
+
+			fileSplt, err = file.SplitFileName(sign)
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			fmt.Println("test : ", fileSplt)
+
 		}
+
+	
 	}
 
 }
 
-// ArrayString ...
-type ArrayString []string
+func (f *File) GetFileSplitter() (string, error) {
+	if f == nil {
+		return " ", nil
+	}
 
-func (s ArrayString) contains(str string) bool {
-	for _, v := range s {
-		if v == str {
-			return true
+	for _, sign := range listSplitter {
+		if strings.Contains(f.name, sign) {
+			return sign, nil
 		}
 	}
 
-	return false
+	return " ", nil
 }
+
+func (f *File) SplitFileName(key string) (utils.ArrayString, error) {
+	if f == nil {
+		return []string{}, nil
+	}
+
+	fileArr := strings.Split(f.name, key)
+	return fileArr, nil
+}
+
+
+
