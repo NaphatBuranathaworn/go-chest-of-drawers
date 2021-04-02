@@ -74,3 +74,47 @@ func TestSplitFileNameUnderscore(t *testing.T) {
 	}
 }
 
+func TestFindIndexDateInFileName(t *testing.T) {
+	f.name = "Screen Shot 2564-04-01 at 11.08.26"
+	sign := " "
+	arr, err := f.SplitFileName(sign)
+
+	if err != nil {
+		t.Fatalf(err.Error())
+	}
+
+	i, err := f.FindIndexDateInFileName(arr)
+	actual := arr[i]
+	expected := arr[2]
+
+	if err != nil {
+		t.Fatalf(err.Error())
+	}
+
+	if actual != expected {
+		t.Fatalf("TestFindIndexDateInFileName : expected %s actual %s", expected, actual)
+	}
+}
+
+func TestFindIndexDateInFileNameNotFoundDate(t *testing.T) {
+	f.name = "Screenshot_1608534453.png"
+	sign := "_"
+	arr, err := f.SplitFileName(sign)
+
+	if err != nil {
+		t.Fatalf(err.Error())
+	}
+
+	i, err := f.FindIndexDateInFileName(arr)
+	actual := arr[i]
+	expected := arr[0]
+
+	if err != nil {
+		t.Fatalf(err.Error())
+	}
+
+	if actual != expected {
+		t.Fatalf("TestFindIndexDateInFileNameNotFoundDate : expected %s actual %s", expected, actual)
+	}
+}
+
